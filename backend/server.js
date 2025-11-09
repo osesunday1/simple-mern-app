@@ -22,7 +22,7 @@ mongoose.connect(process.env.MONGO_URI, {
 
 // Routes
 app.get("/", (req, res) => {
-  res.send("Hello from MERN backend!");
+  res.send("Hello from MERN backend this is awseome!");
 });
 
 app.get("/messages", async (req, res) => {
