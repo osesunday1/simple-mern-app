@@ -3,8 +3,6 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
-import fs from "fs";
-import https from "https";
 import Message from "./models/Message.js";
 
 dotenv.config();
@@ -25,7 +23,7 @@ mongoose
 
 // ✅ Routes
 app.get("/", (req, res) => {
-  res.send("Hello from MERN backend over HTTPS!");
+  res.send("Hello from MERN backend over HTTP (behind ALB HTTPS)!");
 });
 
 app.get("/messages", async (req, res) => {
@@ -48,14 +46,8 @@ app.post("/messages", async (req, res) => {
   }
 });
 
-// ✅ Load SSL certificate
-const httpsOptions = {
-  key: fs.readFileSync("./cert/server.key"),
-  cert: fs.readFileSync("./cert/server.cert"),
-};
-
-// ✅ Start HTTPS Server
+// ✅ Start HTTP Server (no SSL certs here)
 const PORT = process.env.PORT || 5000;
-https.createServer(httpsOptions, app).listen(PORT, () => {
-  console.log(`🚀 HTTPS Server running at https://localhost:${PORT}`);
+app.listen(PORT, () => {
+  console.log(`🚀 HTTP Server running at http://localhost:${PORT}`);
 });

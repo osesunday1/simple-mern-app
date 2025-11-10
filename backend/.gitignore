@@ -39,7 +39,7 @@ coverage/
 .vscode/
 .idea/
 *.swp
-
+cert/
 # MongoDB data
 /data/db/
 
