@@ -14,10 +14,10 @@ app.use(express.json());
 // Load .env locally first (for dev/offline use)
 dotenv.config();
 
-// ✅ Create SSM client
+// Create SSM client
 const ssm = new AWS.SSM({ region: "ca-central-1" });
 
-// ✅ Function to load environment variables from SSM Parameter Store
+// Function to load environment variables from SSM Parameter Store
 async function loadEnvFromSSM() {
   try {
     const params = {
@@ -41,7 +41,7 @@ async function loadEnvFromSSM() {
   }
 }
 
-// ✅ Function to connect to MongoDB
+// Function to connect to MongoDB
 async function connectToMongo() {
   try {
     await mongoose.connect(process.env.MONGO_URI, {
@@ -55,9 +55,9 @@ async function connectToMongo() {
   }
 }
 
-// ✅ Define routes
+// Define routes
 app.get("/", (req, res) => {
-  res.send("Hello from MERN backend over HTTP (behind ALB HTTPS)!");
+  res.send("Hello from MERN backend over HTTP (updated move)!");
 });
 
 app.get("/messages", async (req, res) => {
@@ -80,15 +80,15 @@ app.post("/messages", async (req, res) => {
   }
 });
 
-// ✅ Main startup
+// Main startup
 async function startServer() {
-  // 1️⃣ Try to load from SSM first, fallback to .env if offline
+  // Try to load from SSM first, fallback to .env if offline
   await loadEnvFromSSM();
 
-  // 2️⃣ Connect to MongoDB
+  // Connect to MongoDB
   await connectToMongo();
 
-  // 3️⃣ Start Express server
+  // Start Express server
   const PORT = process.env.PORT || 5000;
   app.listen(PORT, () => {
     console.log(`🚀 Server running at http://localhost:${PORT}`);
