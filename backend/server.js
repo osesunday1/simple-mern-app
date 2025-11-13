@@ -21,7 +21,7 @@ const ssm = new AWS.SSM({ region: "ca-central-1" });
 async function loadEnvFromSSM() {
   try {
     const params = {
-      Names: ["MONGO_URI", "PORT"],
+      Names: ["MONGO_URI", "TESTPORT"],
       WithDecryption: true,
     };
 
@@ -89,9 +89,9 @@ async function startServer() {
   await connectToMongo();
 
   // Start Express server
-  const PORT = process.env.PORT || 5000;
-  app.listen(PORT, () => {
-    console.log(`🚀 Server running at http://localhost:${PORT}`);
+  const TESTPORT = process.env.TESTPORT || 5000;
+  app.listen(TESTPORT, () => {
+    console.log(`🚀 Server running at http://localhost:${TESTPORT}`);
   });
 }
 
